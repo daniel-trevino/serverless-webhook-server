@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "name": "serverless-webhook-server",
+  "alias": "webhook.danieltrevino.se",
+  "regions": ["arn1"],
+  "builds": [{ "src": "src/index.ts", "use": "@now/node@canary" }],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/index.ts"
+    }
+  ],
+  "env": {
+    "PROJECT_NAME": "danieltrevino.se",
+    "CIRCLECI_TOKEN": "@danieltrevino-circleci-token"
+  }
+}
