@@ -2,7 +2,12 @@ import './lib/env'
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import axios from 'axios'
-import { CIRCLECI_TOKEN, PROJECT_NAME, PORT } from './utils/constants'
+import {
+  CIRCLE_JOB,
+  CIRCLECI_TOKEN,
+  PROJECT_NAME,
+  PORT
+} from './utils/constants'
 
 const app = express()
 
@@ -22,8 +27,14 @@ app.post('/webhook', async (_req: any, res: any) => {
   }
 
   try {
+    const data = {
+      build_parameters: {
+        CIRCLE_JOB
+      }
+    }
     await axios.post(
-      `https://circleci.com/api/v1.1/project/gh/danielivert/${PROJECT_NAME}/tree/master?circle-token=${CIRCLECI_TOKEN}`
+      `https://circleci.com/api/v1.1/project/gh/danielivert/${PROJECT_NAME}/tree/master?circle-token=${CIRCLECI_TOKEN}`,
+      data
     )
 
     res.status(200).send('Building...')
