@@ -12,7 +12,7 @@ app.get('/', (_: any, res: any) => {
   res.json({ data: `${Date.now()}` })
 })
 
-app.post('/webhook', async (req: any, res: any) => {
+app.post('/webhook', async (_req: any, res: any) => {
   if (!PROJECT_NAME) {
     res.status(404).send('There is no project name configured')
   }
@@ -22,7 +22,7 @@ app.post('/webhook', async (req: any, res: any) => {
   }
 
   try {
-    const postToCircleCi = await axios.post(
+    await axios.post(
       `https://circleci.com/api/v1.1/project/gh/danielivert/${PROJECT_NAME}/tree/master?circle-token=${CIRCLECI_TOKEN}`
     )
 
